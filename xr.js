@@ -78,6 +78,10 @@
         }), false) : reject(res(xhr));
       });
 
+      if (opts.raw) {
+        delete opts.headers["Content-Type"];
+      }
+
       for (var header in opts.headers) {
         xhr.setRequestHeader(header, opts.headers[header]);
       }for (var _event in opts.events) {
