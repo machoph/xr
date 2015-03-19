@@ -51,15 +51,7 @@ const promise = (args, fn) => new (
   (args && args.promise)
     ? args.promise
     : defaults.promise
-)(fn)
-.catch(
-  promise.CancellationError,
-  function() { 
-    window.console.log("CANCELLING", res.xhr);
-    res.xhr.abort();    
-  }
-);
-
+)(fn);
 
 const xr = args => promise(args, (resolve, reject) => {
   let opts = assign({}, defaults, args);
@@ -93,7 +85,18 @@ const xr = args => promise(args, (resolve, reject) => {
       ? opts.dump(opts.data)
       : opts.data
   );
-});
+})
+.catch(
+  promise.CancellationError,
+  function() { 
+    window.console.log("CANCELLING", res.xhr);
+    res.xhr.abort();    
+  }
+)
+.catch(function(e) {
+    window.console.log('ERROR IN XR', e);
+})
+
 
 xr.assign = assign;
 xr.Methods = Methods;
