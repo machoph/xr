@@ -87,7 +87,7 @@
       }for (var _event in opts.events) {
         xhr.addEventListener(_event, opts.events[_event].bind(null, xhr), false);
       }xhr.send(typeof opts.data === "object" && !opts.raw ? opts.dump(opts.data) : opts.data);
-    })["catch"](promise.CancellationError, function () {
+    })["catch"](Promise.CancellationError, function () {
       window.console.log("CANCELLING", res.xhr);
       res.xhr.abort();
     })["catch"](function (e) {

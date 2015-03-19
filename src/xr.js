@@ -87,7 +87,7 @@ const xr = args => promise(args, (resolve, reject) => {
   );
 })
 .catch(
-  promise.CancellationError,
+  Promise.CancellationError,
   function() { 
     window.console.log("CANCELLING", res.xhr);
     res.xhr.abort();    
