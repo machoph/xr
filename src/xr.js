@@ -87,14 +87,14 @@ const xr = args => promise(args, (resolve, reject) => {
   );
 })
 .catch(
-  Promise.CancellationError,
+  promise.CancellationError,
   function() { 
     window.console.log("CANCELLING", res.xhr);
     res.xhr.abort();    
   }
 )
 .catch(function(e) {
-    window.console.log('ERROR IN XR', e);
+    window.console.log('ERROR IN XR', promise);
 })
 
 
