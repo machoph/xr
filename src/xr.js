@@ -53,8 +53,10 @@ const promise = (args, fn) => new (
     : defaults.promise
 )(fn);
 
+var opts;
+
 const xr = args => promise(args, (resolve, reject) => {
-  let opts = assign({}, defaults, args);
+  opts = assign({}, defaults, args);
   let xhr = new XMLHttpRequest();
 
   xhr.open(
@@ -87,14 +89,14 @@ const xr = args => promise(args, (resolve, reject) => {
   );
 })
 .catch(
-  promise.CancellationError,
+  opts.promise.CancellationError,
   function() { 
     window.console.log("CANCELLING", res.xhr);
     res.xhr.abort();    
   }
 )
 .catch(function(e) {
-    window.console.log('ERROR IN XR', promise);
+    window.console.log('ERROR IN XR', e);
 })
 
 
