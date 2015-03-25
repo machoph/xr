@@ -44,7 +44,7 @@ const defaults = {
   },
   dump: JSON.stringify,
   load: JSON.parse,
-  promise: Promise
+  promise: (window) ? window.Promise : Promise
 };
 
 const promise = (args, fn) => new (

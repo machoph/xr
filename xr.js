@@ -59,7 +59,7 @@
     },
     dump: JSON.stringify,
     load: JSON.parse,
-    promise: Promise
+    promise: window ? window.Promise : Promise
   };
 
   var promise = function (args, fn) {
