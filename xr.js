@@ -68,25 +68,32 @@
 
   var xr = function (args) {
     return promise(args, function (resolve, reject) {
-      var opts = assign({}, defaults, args);
-      var xhr = new XMLHttpRequest();
+      try {
+        (function () {
+          var opts = assign({}, defaults, args);
+          var xhr = new XMLHttpRequest();
 
-      xhr.open(opts.method, opts.params ? "" + opts.url.split("?")[0] + "?" + getParams(opts.params) : opts.url, true);
-      xhr.addEventListener("load", function () {
-        return xhr.status >= 200 && xhr.status < 300 ? resolve(assign({}, res(xhr), {
-          data: xhr.response ? opts.load(xhr.response) : null
-        }), false) : reject(res(xhr));
-      });
+          xhr.open(opts.method, opts.params ? "" + opts.url.split("?")[0] + "?" + getParams(opts.params) : opts.url, true);
+          xhr.addEventListener("load", function () {
+            return xhr.status >= 200 && xhr.status < 300 ? resolve(assign({}, res(xhr), {
+              data: xhr.response ? opts.load(xhr.response) : null
+            }), false) : reject(res(xhr));
+          });
 
-      if (opts.raw) {
-        delete opts.headers["Content-Type"];
+          if (opts.raw) {
+            delete opts.headers["Content-Type"];
+          }
+
+          for (var header in opts.headers) {
+            xhr.setRequestHeader(header, opts.headers[header]);
+          }for (var _event in opts.events) {
+            xhr.addEventListener(_event, opts.events[_event].bind(null, xhr), false);
+          }xhr.send(typeof opts.data === "object" && !opts.raw ? opts.dump(opts.data) : opts.data);
+        })();
+      } catch (e) {
+        window.console.log("XR error");
+        window.console.log(e);
       }
-
-      for (var header in opts.headers) {
-        xhr.setRequestHeader(header, opts.headers[header]);
-      }for (var _event in opts.events) {
-        xhr.addEventListener(_event, opts.events[_event].bind(null, xhr), false);
-      }xhr.send(typeof opts.data === "object" && !opts.raw ? opts.dump(opts.data) : opts.data);
     });
   };
 

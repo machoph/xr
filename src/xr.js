@@ -54,6 +54,7 @@ const promise = (args, fn) => new (
 )(fn);
 
 const xr = args => promise(args, (resolve, reject) => {
+  try {
   let opts = assign({}, defaults, args);
   let xhr = new XMLHttpRequest();
 
@@ -85,6 +86,10 @@ const xr = args => promise(args, (resolve, reject) => {
       ? opts.dump(opts.data)
       : opts.data
   );
+  } catch (e) {
+      window.console.log('XR error');
+      window.console.log(e);
+  }
 });
 
 xr.assign = assign;
