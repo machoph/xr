@@ -59,7 +59,7 @@
     },
     dump: JSON.stringify,
     load: JSON.parse,
-    promise: window ? window.Promise : Promise
+    promise: (typeof window !== "undefined") ? window.Promise : Promise
   };
 
   var promise = function (args, fn) {
