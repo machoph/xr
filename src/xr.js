@@ -54,7 +54,13 @@ const promise = (args, fn) => new (
 )(fn);
 
 const xr = args => promise(args, (resolve, reject) => {
+  if((typeof window === "undefined")){
+    var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+  }
+
   let opts = assign({}, defaults, args);
+
+
   let xhr = new XMLHttpRequest();
 
   xhr.open(
