@@ -5,13 +5,13 @@
     factory(exports, module);
   }
 })(function (exports, module) {
-  "use strict";
-
   /**
    * xr (c) James Cleveland 2015
    * URL: https://github.com/radiosilence/xr
    * License: BSD
    */
+
+  "use strict";
 
   var res = function (xhr) {
     return {
@@ -59,7 +59,7 @@
     },
     dump: JSON.stringify,
     load: JSON.parse,
-    promise: (typeof window !== "undefined") ? window.Promise : Promise
+    promise: typeof window !== "undefined" ? window.Promise : Promise
   };
 
   var promise = function (args, fn) {
@@ -68,8 +68,9 @@
 
   var xr = function (args) {
     return promise(args, function (resolve, reject) {
+
       var opts = assign({}, defaults, args);
-      
+
       var xhr = new XMLHttpRequest();
 
       xhr.open(opts.method, opts.params ? "" + opts.url.split("?")[0] + "?" + getParams(opts.params) : opts.url, true);
