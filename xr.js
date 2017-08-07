@@ -69,9 +69,7 @@
   var xr = function (args) {
     return promise(args, function (resolve, reject) {
       var opts = assign({}, defaults, args);
-      if((typeof window === "undefined")){
-        var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-      }
+      
       var xhr = new XMLHttpRequest();
 
       xhr.open(opts.method, opts.params ? "" + opts.url.split("?")[0] + "?" + getParams(opts.params) : opts.url, true);
